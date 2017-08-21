@@ -1,0 +1,252 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+if ( ! function_exists('get_youtube_thumbnail')){
+    
+   function get_youtube_thumbnail($vd_path){
+       //get main CodeIgniter object
+       $ci =& get_instance();
+       
+       //load databse library
+       $ci->load->database();
+       
+       
+       
+       $id = str_replace("https://www.youtube.com/watch?v=","", $vd_path); 
+       $url ="http://img.youtube.com/vi/".$id."/mqdefault.jpg";
+       
+       echo $url;
+       
+       //get data from database
+       //$query = $ci->db->get_where('users',array('id'=>$id));
+       
+//       if($query->num_rows() > 0){
+//           $result = $query->row_array();
+//           return $result;
+//       }else{
+//           return false;
+//       }
+   }
+   
+   function create_url($controller, $function, $argue)
+   {
+      $url = $controller."/".$function; 
+      return base_url($url)."/".$argue;
+   }
+   
+   function clean_post_name($postname){
+       $name = str_replace(" ","_",$postname);
+       echo $name;
+   }
+   
+   function limit_title_13($str)
+   {
+	  $str1 = substr($str, 0, 28);
+          
+          if($str1>28)
+          {
+	  return $str1."..";
+          }
+          else
+          {
+           return $str1;   
+          }
+   }
+   
+   function limit_title_100($str)
+   {
+	  $str1 = substr($str, 0, 100);
+          
+          if($str1>100)
+          {
+	  echo $str1."..";
+          }
+          else
+          {
+           echo $str1;   
+          }
+   }
+   
+   function post_permalink($postname, $post_keY){
+       
+       $postname = str_replace(" ","_",$postname);
+       echo base_url('post').'/'.htmlentities($postname).'/'.htmlentities($post_keY);
+   }
+   function user_img($img_name)
+   {
+       echo base_url().$img_name;
+   }
+   
+   function play_img()
+   {
+       echo base_url('images/play-button.png');
+   }
+   
+   function get_date($date)
+   {
+    $date = date_create($date);
+    echo $date = date_format($date, 'j F Y');
+   }
+   
+   function get_prof_name($str)
+   {
+    $path =explode("img_profile/",$str);
+    return $path[1];
+   }
+   
+   function get_expert($str)
+   {
+
+   // if (strlen($str) > 10)
+    echo $str = substr($str, 0, 89) . '...';
+
+   }
+   
+   function location_print($str)
+   {
+    //if (strlen($str) > 10)
+    echo $str = substr($str, 0, 30) . '...';
+
+   }
+   
+   
+   function get_expert_rp($str)
+   {
+
+    //if (strlen($str) > 10)
+    echo $str = substr($str, 0, 40) . '...';
+
+   }
+   
+   function get_job_ttl($str)
+   {
+    $str = strip_tags($str);
+    //if (strlen($str) > 10)
+    if($str>=40)
+      echo  $str; 
+    else
+      echo $str = substr($str, 0, 40)."";
+
+   }
+   function remove_add_spaces($str)
+   {
+       $str = str_replace(" ","_",$str); 
+       return preg_replace('/[^A-Za-z0-9\-]/', '', $str);
+   }
+   function red_divider()
+   {
+        echo"<div class='red-divider'><img class='red-divider' src=".base_url('images/red-divider.JPG')."></div>";
+   }
+   
+   function get_job_expert($str)
+   {
+    $str = strip_tags($str);
+    //if (strlen($str) > 10)
+    echo $str = substr($str, 0, 60);
+
+   }
+   
+   function is_img_exist($img)
+   {
+       if($img!=="no-img.jpg")
+       {
+         return base_url('upload/').'/'.$img;  
+       }
+       else
+       {
+         return base_url('images/').'/'.'no-image-available.png';  
+       }
+   }
+   
+   function vimeo_thumb($imgid)
+   {
+    
+    $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.jpg"));
+    
+    return $hash[0]['thumbnail_medium'];  
+   }
+   
+   function get_vimeo_id($url)
+   {
+      
+      $imgid = (int) substr(parse_url($url, PHP_URL_PATH), 1);
+      
+
+      return $imgid; 
+   }
+   
+   function get_vimeo_thumb_last($url)
+   {
+       (int)$id = substr($url, strrpos($url, '/') + 1);                           
+       $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$id.php"));
+       return $thumb = $hash[0]['thumbnail_medium']; 
+   }
+   
+   function get_vimeo_thumb1($url)
+   {
+      
+      $imgid = (int) substr(parse_url($url, PHP_URL_PATH), 1);
+      
+      $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+
+      echo $hash[0]['thumbnail_medium']; 
+   }
+   function get_prof_img($img)
+   {
+      if($img !== NULL) 
+      {
+      echo $url = base_url()."img_profile/".$img;        
+      }
+      else
+      {  
+        echo $url = base_url()."img_profile/no-image.gif";     
+      }
+   }
+   
+   function get_job_img($img)
+   {
+      if($img !== NULL) 
+      {
+      echo $url = base_url()."jobimages/".$img;        
+      }
+      else
+      {  
+        echo $url = base_url()."jobimages/no-image.gif";     
+      }
+   }
+   
+   
+  function set_pagi($controller_url, $toatal_rows, $per_page)
+    {
+        
+        
+        $config['base_url'] = base_url($controller_url);
+        $config['total_rows'] = $toatal_rows;
+        $config['per_page'] = $per_page; 
+        
+        
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        
+        
+        $ci =& get_instance();
+        $ci->pagination->initialize($config);
+        
+        return $per_page; 
+    }
+}

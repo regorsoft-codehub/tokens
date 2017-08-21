@@ -1,2 +1,2 @@
 # tokens
-code is belongs to regorsoft IT services
+code is belongs to author: SUDHAKAR PHAD 
